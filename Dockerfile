@@ -16,7 +16,7 @@ RUN npm run build
 # ==========================================
 # Stage 2: Production PHP + Nginx Runtime
 # ==========================================
-FROM php:8.3-fpm-alpine AS runner
+FROM php:8.5-fpm-alpine AS runner
 
 # Install system dependencies and Nginx
 RUN apk add --no-cache \
