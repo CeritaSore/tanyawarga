@@ -12,6 +12,7 @@ mkdir -p /var/www/html/storage/framework/views
 mkdir -p /var/www/html/storage/logs
 mkdir -p /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # If using SQLite and file does not exist, create it
 if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
@@ -22,11 +23,16 @@ if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
         touch "$DB_FILE"
     fi
     chmod -R 775 "$(dirname "$DB_FILE")"
+    chown -R www-data:www-data "$(dirname "$DB_FILE")"
 fi
+
+# Run package discovery now that runtime environment variables are loaded
+echo "Discovering Laravel packages..."
+php artisan package:discover --ansi || true
 
 # Cache configurations & routes if APP_KEY is provided
 if [ -n "$APP_KEY" ]; then
-    echo "Caching configuration and routes..."
+    echo "Caching configuration, routes, and views..."
     php artisan config:cache || true
     php artisan route:cache || true
     php artisan view:cache || true

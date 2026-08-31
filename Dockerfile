@@ -49,6 +49,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         pdo_sqlite \
         zip
 
+# Set Composer environment
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Copy Composer binary
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
@@ -66,8 +69,16 @@ COPY . /var/www/html
 # Copy compiled frontend assets from Stage 1
 COPY --from=frontend-builder /app/public/build /var/www/html/public/build
 
-# Install production PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+# Ensure framework directories exist with proper permissions before install
+RUN mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views \
+    && mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Install production PHP dependencies without running artisan scripts during build time
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --no-scripts
 
 # Set ownership and permissions for web user
 RUN chown -R www-data:www-data /var/www/html \
