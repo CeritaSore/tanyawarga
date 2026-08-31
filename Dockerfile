@@ -16,38 +16,24 @@ RUN npm run build
 # ==========================================
 # Stage 2: Production PHP + Nginx Runtime
 # ==========================================
-FROM php:8.5-fpm-alpine AS runner
+FROM php:8.4-fpm-alpine AS runner
 
-# Install system dependencies and Nginx
-RUN apk add --no-cache \
-    nginx \
-    curl \
-    git \
-    unzip \
-    libzip-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    oniguruma-dev \
-    icu-dev \
-    sqlite-dev \
-    libpq-dev \
-    postgresql-dev
+# Install Nginx, curl, git, and unzip
+RUN apk add --no-cache nginx curl git unzip
 
-# Install PHP extensions required by Laravel
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        bcmath \
-        gd \
-        intl \
-        mbstring \
-        opcache \
-        pcntl \
-        pdo \
-        pdo_mysql \
-        pdo_pgsql \
-        pdo_sqlite \
-        zip
+# Install PHP extensions using the official extension installer
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+RUN install-php-extensions \
+    bcmath \
+    gd \
+    intl \
+    opcache \
+    pcntl \
+    pdo_mysql \
+    pdo_pgsql \
+    pdo_sqlite \
+    zip
 
 # Set Composer environment
 ENV COMPOSER_ALLOW_SUPERUSER=1
