@@ -76,9 +76,9 @@ const getReportUrl = () => {
                 :href="getGmapsUrl()"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs font-semibold transition active:scale-95 text-center shadow-2xs"
+                class="inline-flex items-center justify-center gap-1.5 h-11 px-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 text-xs font-semibold transition active:scale-98 text-center shadow-2xs"
             >
-                <Navigation class="h-3.5 w-3.5 text-slate-600 flex-shrink-0" />
+                <Navigation class="h-4 w-4 text-slate-600 flex-shrink-0" />
                 <span>Datangi Rumah</span>
             </a>
 
@@ -87,9 +87,9 @@ const getReportUrl = () => {
                 :href="getWhatsappUrl()"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-xs font-semibold transition active:scale-95 text-center shadow-xs"
+                class="inline-flex items-center justify-center gap-1.5 h-11 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white text-xs font-semibold transition active:scale-98 text-center shadow-xs"
             >
-                <MessageCircle class="h-3.5 w-3.5 text-white flex-shrink-0" />
+                <MessageCircle class="h-4 w-4 text-white flex-shrink-0" />
                 <span>Hubungi Pejabat</span>
             </a>
         </div>

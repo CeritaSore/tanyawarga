@@ -114,15 +114,6 @@ const loadDemo = () => {
                 <span>Lapor Data</span>
             </Link>
 
-            <!-- Neutral Action: Contoh Data -->
-            <button
-                @click="loadDemo"
-                class="text-xs text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition flex items-center gap-1 font-medium"
-            >
-                <Sparkles class="h-3 w-3 text-emerald-600" />
-                <span>Contoh</span>
-            </button>
-
             <!-- Login Link -->
             <Link
                 href="/login"
@@ -142,7 +133,7 @@ const loadDemo = () => {
             </p>
         </section>
 
-        <!-- Region Search Composite Form -->
+        <!-- Region Search Composite Form with embedded Contoh button -->
         <RegionSearchForm
             v-model:province="selectedProvince"
             v-model:regency="selectedRegency"
@@ -150,6 +141,7 @@ const loadDemo = () => {
             v-model:village="selectedVillage"
             :is-searching="isSearching"
             @search="handleSearch"
+            @load-demo="loadDemo"
         />
 
         <!-- Officials List Composite Component -->

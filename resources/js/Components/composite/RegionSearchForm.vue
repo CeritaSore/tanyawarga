@@ -20,7 +20,7 @@ import {
 } from '@/Components/ui/select';
 
 // Icons
-import { Search, Check } from 'lucide-vue-next';
+import { Search, Check, Sparkles } from 'lucide-vue-next';
 
 const selectedProvince = defineModel('province', { type: String, default: '' });
 const selectedRegency = defineModel('regency', { type: String, default: '' });
@@ -34,7 +34,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['search']);
+const emit = defineEmits(['search', 'load-demo']);
 
 // Cascading options
 const availableRegencies = computed(() => {
@@ -76,9 +76,21 @@ const isSearchReady = computed(() => {
 <template>
     <section class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
         <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Pilih Wilayah Domisili
-            </span>
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Pilih Wilayah Domisili
+                </span>
+                <!-- Tombol Contoh di sebelah Pilih Wilayah Domisili -->
+                <button
+                    type="button"
+                    @click="emit('load-demo')"
+                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 border border-emerald-200/80 transition active:scale-95 cursor-pointer"
+                    title="Isi form otomatis dengan contoh data"
+                >
+                    <Sparkles class="h-3 w-3 text-emerald-600" />
+                    <span>Contoh</span>
+                </button>
+            </div>
             <span class="text-[11px] text-slate-400">4 Langkah</span>
         </div>
 
@@ -93,7 +105,7 @@ const isSearchReady = computed(() => {
                     </span>
                 </label>
                 <Select v-model="selectedProvince">
-                    <SelectTrigger class="h-10 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <SelectTrigger class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
                         <SelectValue placeholder="Pilih Provinsi..." />
                     </SelectTrigger>
                     <SelectContent class="bg-white">
@@ -124,7 +136,7 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedProvince"
                 >
                     <SelectTrigger
-                        class="h-10 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                         :class="!selectedProvince ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kota / Kabupaten..." />
@@ -157,7 +169,7 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedRegency"
                 >
                     <SelectTrigger
-                        class="h-10 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                         :class="!selectedRegency ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kecamatan..." />
@@ -190,7 +202,7 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedDistrict"
                 >
                     <SelectTrigger
-                        class="h-10 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                         :class="!selectedDistrict ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kelurahan / Desa..." />
