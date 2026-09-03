@@ -5,11 +5,12 @@ PORT_NUMBER="${PORT:-80}"
 echo "Configuring Nginx to listen on port: $PORT_NUMBER"
 sed -i "s/__PORT__/$PORT_NUMBER/g" /etc/nginx/nginx.conf
 
-# Ensure storage and bootstrap cache directories exist and have proper permissions
+# Ensure storage and bootstrap cache directories exist with proper permissions
 mkdir -p /var/www/html/storage/framework/cache
 mkdir -p /var/www/html/storage/framework/sessions
 mkdir -p /var/www/html/storage/framework/views
 mkdir -p /var/www/html/storage/logs
+mkdir -p /var/www/html/storage/app/public
 mkdir -p /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -26,16 +27,21 @@ if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
     chown -R www-data:www-data "$(dirname "$DB_FILE")"
 fi
 
-# Run package discovery now that runtime environment variables are loaded
+# Ensure storage symlink exists
+echo "Creating storage symlink..."
+php artisan storage:link || true
+
+# Run package discovery with runtime environment variables
 echo "Discovering Laravel packages..."
 php artisan package:discover --ansi || true
 
-# Cache configurations & routes if APP_KEY is provided
+# Cache configurations, routes, and views if APP_KEY is provided
 if [ -n "$APP_KEY" ]; then
-    echo "Caching configuration, routes, and views..."
+    echo "Caching configuration, routes, events, and views..."
     php artisan config:cache || true
     php artisan route:cache || true
     php artisan view:cache || true
+    php artisan event:cache || true
 
     echo "Running database migrations..."
     php artisan migrate --force || true

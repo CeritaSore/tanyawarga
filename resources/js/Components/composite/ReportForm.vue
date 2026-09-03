@@ -87,36 +87,36 @@ const resetForm = () => {
         <!-- Success State Banner -->
         <section
             v-if="isSubmitted"
-            class="bg-white rounded-2xl border border-emerald-200 p-6 shadow-xs space-y-4 text-center"
+            class="bg-white rounded-2xl border border-emerald-200 p-6 sm:p-8 shadow-xs space-y-5 text-center"
         >
-            <div class="h-12 w-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                <CheckCircle2 class="h-6 w-6" />
+            <div class="h-14 w-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                <CheckCircle2 class="h-7 w-7" />
             </div>
-            <div class="space-y-1">
-                <h2 class="text-lg font-bold text-slate-900">
+            <div class="space-y-1.5">
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">
                     Laporan Berhasil Terkirim!
                 </h2>
-                <p class="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto">
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
                     Terima kasih banyak atas kepedulian Anda. Laporan koreksi data pejabat ini akan segera diverifikasi oleh tim verifikator TanyaWarga.
                 </p>
             </div>
 
-            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
+            <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Button
                     variant="warning"
                     size="sm"
                     @click="resetForm"
-                    class="w-full sm:w-auto h-9 text-xs"
+                    class="w-full sm:w-auto h-10 text-xs sm:text-sm"
                 >
-                    <RotateCcw class="h-3.5 w-3.5 mr-1" />
+                    <RotateCcw class="h-4 w-4 mr-1.5" />
                     Kirim Laporan Lainnya
                 </Button>
 
                 <Link
                     href="/"
-                    class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition"
+                    class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 h-10 px-5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold transition shadow-xs"
                 >
-                    <Search class="h-3.5 w-3.5" />
+                    <Search class="h-4 w-4" />
                     Kembali ke Pencarian
                 </Link>
             </div>
@@ -125,13 +125,13 @@ const resetForm = () => {
         <!-- Report Form Card -->
         <section
             v-else
-            class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4"
+            class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs space-y-4 sm:space-y-5"
         >
             <!-- Form Inputs -->
-            <div class="space-y-3.5">
+            <div class="space-y-4">
                 <!-- 1. Pejabat / Lokasi -->
-                <div class="space-y-1">
-                    <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+                <div class="space-y-1.5">
+                    <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                         <span>Nama Pejabat / Jabatan yang Dilaporkan <span class="text-rose-500">*</span></span>
                         <span class="text-[11px] text-slate-400">Wajib</span>
                     </label>
@@ -139,21 +139,21 @@ const resetForm = () => {
                         v-model="targetOfficial"
                         type="text"
                         placeholder="Contoh: Lurah Senayan atau Ketua RW 03"
-                        class="w-full h-10 px-3 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        class="w-full h-11 px-3.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
                     />
                 </div>
 
                 <!-- 2. Wilayah (Opsional) -->
-                <div class="space-y-2 pt-1 pb-1 border-y border-slate-100">
-                    <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                <div class="space-y-2 pt-2 pb-2 border-y border-slate-100">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
                         Pilih Lokasi Wilayah (Opsional)
                     </span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <Select v-model="selectedProvince">
-                            <SelectTrigger class="h-9 text-xs border-slate-200 bg-white">
+                            <SelectTrigger class="h-10 text-xs sm:text-sm border-slate-200 bg-white">
                                 <SelectValue placeholder="Pilih Provinsi..." />
                             </SelectTrigger>
-                            <SelectContent class="bg-white">
+                            <SelectContent class="bg-white max-h-56">
                                 <SelectGroup>
                                     <SelectItem
                                         v-for="prov in provinces"
@@ -171,12 +171,12 @@ const resetForm = () => {
                             :disabled="!selectedProvince"
                         >
                             <SelectTrigger
-                                class="h-9 text-xs border-slate-200 bg-white"
+                                class="h-10 text-xs sm:text-sm border-slate-200 bg-white"
                                 :class="!selectedProvince ? 'bg-slate-50 opacity-60' : ''"
                             >
                                 <SelectValue placeholder="Pilih Kota/Kab..." />
                             </SelectTrigger>
-                            <SelectContent class="bg-white">
+                            <SelectContent class="bg-white max-h-56">
                                 <SelectGroup>
                                     <SelectItem
                                         v-for="reg in (regencies[selectedProvince] || [])"
@@ -192,12 +192,12 @@ const resetForm = () => {
                 </div>
 
                 <!-- 3. Jenis Masalah -->
-                <div class="space-y-1">
-                    <label class="text-xs font-medium text-slate-700">
+                <div class="space-y-1.5">
+                    <label class="text-xs sm:text-sm font-medium text-slate-700">
                         Jenis Masalah Data
                     </label>
                     <Select v-model="issueType">
-                        <SelectTrigger class="h-10 text-sm border-slate-200 bg-white">
+                        <SelectTrigger class="h-11 text-xs sm:text-sm border-slate-200 bg-white">
                             <SelectValue placeholder="Pilih jenis kendala data..." />
                         </SelectTrigger>
                         <SelectContent class="bg-white">
@@ -215,8 +215,8 @@ const resetForm = () => {
                 </div>
 
                 <!-- 4. Catatan Koreksi -->
-                <div class="space-y-1">
-                    <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+                <div class="space-y-1.5">
+                    <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                         <span>Informasi / Koreksi yang Benar <span class="text-rose-500">*</span></span>
                         <span class="text-[11px] text-slate-400">Wajib</span>
                     </label>
@@ -224,42 +224,42 @@ const resetForm = () => {
                         v-model="correctionNotes"
                         rows="4"
                         placeholder="Tuliskan nomor WhatsApp aktif yang baru, alamat kantor terkini, atau nama pejabat pengganti yang benar..."
-                        class="w-full p-3 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                        class="w-full p-3.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none transition"
                     ></textarea>
                 </div>
 
                 <!-- 5. Kontak Pelapor -->
-                <div class="space-y-1">
-                    <label class="text-xs font-medium text-slate-700">
+                <div class="space-y-1.5">
+                    <label class="text-xs sm:text-sm font-medium text-slate-700">
                         Kontak Anda (Nama / No. WhatsApp - Opsional)
                     </label>
                     <input
                         v-model="citizenContact"
                         type="text"
                         placeholder="Budi - 081234567890"
-                        class="w-full h-10 px-3 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                        class="w-full h-11 px-3.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
                     />
                 </div>
             </div>
 
             <!-- Action Buttons -->
-            <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2">
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+            <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 w-full sm:w-auto">
                     <!-- Reset Action -->
                     <Button
                         variant="warning"
                         size="default"
                         @click="resetForm"
-                        class="h-10 px-3 text-xs"
+                        class="h-11 px-4 text-xs sm:text-sm font-medium"
                     >
-                        <RotateCcw class="h-3.5 w-3.5 mr-1" />
+                        <RotateCcw class="h-4 w-4 mr-1.5" />
                         Reset
                     </Button>
 
                     <!-- Cancel Action -->
                     <Link
                         href="/"
-                        class="inline-flex items-center justify-center h-10 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition"
+                        class="inline-flex items-center justify-center h-11 px-4 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold transition"
                     >
                         Batal
                     </Link>
@@ -271,9 +271,9 @@ const resetForm = () => {
                     size="default"
                     :disabled="!correctionNotes.trim() || !targetOfficial.trim() || isSubmitting"
                     @click="submitReport"
-                    class="w-full sm:w-auto h-10 px-5 text-xs font-semibold shadow-xs"
+                    class="w-full sm:w-auto h-11 px-6 text-xs sm:text-sm font-semibold shadow-xs"
                 >
-                    <Send class="h-3.5 w-3.5 mr-1.5" />
+                    <Send class="h-4 w-4 mr-2" />
                     <span v-if="!isSubmitting">Kirim Laporan</span>
                     <span v-else>Mengirimkan...</span>
                 </Button>

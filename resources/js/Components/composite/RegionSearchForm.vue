@@ -20,7 +20,7 @@ import {
 } from '@/Components/ui/select';
 
 // Icons
-import { Search, Check, Sparkles } from 'lucide-vue-next';
+import { Search, Check, Sparkles, MapPin } from 'lucide-vue-next';
 
 const selectedProvince = defineModel('province', { type: String, default: '' });
 const selectedRegency = defineModel('regency', { type: String, default: '' });
@@ -74,41 +74,45 @@ const isSearchReady = computed(() => {
 </script>
 
 <template>
-    <section class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs space-y-4">
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-            <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+    <section class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 lg:p-7 shadow-xs space-y-4 sm:space-y-5">
+        <!-- Form Header with Title & Embedded Contoh Button -->
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2.5">
+                <div class="h-7 w-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <MapPin class="h-4 w-4" />
+                </div>
+                <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700">
                     Pilih Wilayah Domisili
                 </span>
-                <!-- Tombol Contoh di sebelah Pilih Wilayah Domisili -->
+                <!-- Tombol Contoh Otomatis -->
                 <button
                     type="button"
                     @click="emit('load-demo')"
-                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 border border-emerald-200/80 transition active:scale-95 cursor-pointer"
+                    class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 active:bg-emerald-200 border border-emerald-200/80 transition active:scale-95 cursor-pointer shadow-2xs"
                     title="Isi form otomatis dengan contoh data"
                 >
-                    <Sparkles class="h-3 w-3 text-emerald-600" />
+                    <Sparkles class="h-3.5 w-3.5 text-emerald-600" />
                     <span>Contoh</span>
                 </button>
             </div>
-            <span class="text-[11px] text-slate-400">4 Langkah</span>
+            <span class="text-xs text-slate-400 font-medium">4 Langkah Wilayah</span>
         </div>
 
-        <!-- 4 Cascading Fields -->
-        <div class="space-y-3">
+        <!-- 4 Cascading Fields: 1 col (Mobile) -> 2 cols (Tablet) -> 4 cols (Laptop/Desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <!-- 1. Provinsi -->
-            <div class="space-y-1">
-                <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+            <div class="space-y-1.5">
+                <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                     <span>1. Provinsi</span>
-                    <span v-if="selectedProvince" class="text-emerald-600 text-[11px] flex items-center gap-0.5 font-medium">
-                        <Check class="h-3 w-3" /> Terpilih
+                    <span v-if="selectedProvince" class="text-emerald-600 text-xs flex items-center gap-0.5 font-medium">
+                        <Check class="h-3.5 w-3.5" /> Terpilih
                     </span>
                 </label>
                 <Select v-model="selectedProvince">
-                    <SelectTrigger class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <SelectTrigger class="h-11 text-xs sm:text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 shadow-2xs">
                         <SelectValue placeholder="Pilih Provinsi..." />
                     </SelectTrigger>
-                    <SelectContent class="bg-white">
+                    <SelectContent class="bg-white max-h-60">
                         <SelectGroup>
                             <SelectLabel>Provinsi di Indonesia</SelectLabel>
                             <SelectItem
@@ -124,11 +128,11 @@ const isSearchReady = computed(() => {
             </div>
 
             <!-- 2. Kota / Kabupaten -->
-            <div class="space-y-1">
-                <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+            <div class="space-y-1.5">
+                <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                     <span>2. Kota / Kabupaten</span>
-                    <span v-if="selectedRegency" class="text-emerald-600 text-[11px] flex items-center gap-0.5 font-medium">
-                        <Check class="h-3 w-3" /> Terpilih
+                    <span v-if="selectedRegency" class="text-emerald-600 text-xs flex items-center gap-0.5 font-medium">
+                        <Check class="h-3.5 w-3.5" /> Terpilih
                     </span>
                 </label>
                 <Select
@@ -136,12 +140,12 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedProvince"
                 >
                     <SelectTrigger
-                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-xs sm:text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 shadow-2xs"
                         :class="!selectedProvince ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kota / Kabupaten..." />
                     </SelectTrigger>
-                    <SelectContent class="bg-white">
+                    <SelectContent class="bg-white max-h-60">
                         <SelectGroup>
                             <SelectLabel>Kota / Kabupaten</SelectLabel>
                             <SelectItem
@@ -157,11 +161,11 @@ const isSearchReady = computed(() => {
             </div>
 
             <!-- 3. Kecamatan -->
-            <div class="space-y-1">
-                <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+            <div class="space-y-1.5">
+                <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                     <span>3. Kecamatan</span>
-                    <span v-if="selectedDistrict" class="text-emerald-600 text-[11px] flex items-center gap-0.5 font-medium">
-                        <Check class="h-3 w-3" /> Terpilih
+                    <span v-if="selectedDistrict" class="text-emerald-600 text-xs flex items-center gap-0.5 font-medium">
+                        <Check class="h-3.5 w-3.5" /> Terpilih
                     </span>
                 </label>
                 <Select
@@ -169,12 +173,12 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedRegency"
                 >
                     <SelectTrigger
-                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-xs sm:text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 shadow-2xs"
                         :class="!selectedRegency ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kecamatan..." />
                     </SelectTrigger>
-                    <SelectContent class="bg-white">
+                    <SelectContent class="bg-white max-h-60">
                         <SelectGroup>
                             <SelectLabel>Kecamatan</SelectLabel>
                             <SelectItem
@@ -190,11 +194,11 @@ const isSearchReady = computed(() => {
             </div>
 
             <!-- 4. Kelurahan -->
-            <div class="space-y-1">
-                <label class="text-xs font-medium text-slate-700 flex items-center justify-between">
+            <div class="space-y-1.5">
+                <label class="text-xs sm:text-sm font-medium text-slate-700 flex items-center justify-between">
                     <span>4. Kelurahan / Desa</span>
-                    <span v-if="selectedVillage" class="text-emerald-600 text-[11px] flex items-center gap-0.5 font-medium">
-                        <Check class="h-3 w-3" /> Terpilih
+                    <span v-if="selectedVillage" class="text-emerald-600 text-xs flex items-center gap-0.5 font-medium">
+                        <Check class="h-3.5 w-3.5" /> Terpilih
                     </span>
                 </label>
                 <Select
@@ -202,12 +206,12 @@ const isSearchReady = computed(() => {
                     :disabled="!selectedDistrict"
                 >
                     <SelectTrigger
-                        class="h-11 text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        class="h-11 text-xs sm:text-sm border-slate-200 bg-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 shadow-2xs"
                         :class="!selectedDistrict ? 'bg-slate-50 text-slate-400 opacity-60' : ''"
                     >
                         <SelectValue placeholder="Pilih Kelurahan / Desa..." />
                     </SelectTrigger>
-                    <SelectContent class="bg-white">
+                    <SelectContent class="bg-white max-h-60">
                         <SelectGroup>
                             <SelectLabel>Kelurahan / Desa</SelectLabel>
                             <SelectItem
@@ -224,16 +228,16 @@ const isSearchReady = computed(() => {
         </div>
 
         <!-- Tombol Sukses/Primary: Cari Pejabat (Hijau) -->
-        <div class="pt-2">
+        <div class="pt-1">
             <Button
                 variant="success"
                 size="lg"
-                class="w-full h-12 rounded-xl text-sm font-semibold shadow-xs"
+                class="w-full h-12 rounded-xl text-sm sm:text-base font-semibold shadow-xs"
                 :disabled="!isSearchReady || isSearching"
                 @click="emit('search')"
             >
-                <Search class="h-4 w-4 mr-1.5" />
-                <span v-if="!isSearching">Cari Pejabat</span>
+                <Search class="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                <span v-if="!isSearching">Cari Pejabat Administrasi</span>
                 <span v-else>Mencari Pejabat...</span>
             </Button>
         </div>
